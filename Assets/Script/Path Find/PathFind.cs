@@ -10,6 +10,7 @@ namespace MyPath
         private Grid<PathNode> grid;
         private List<PathNode> openList;
         private List<PathNode> closedList;
+        private bool find8direct;
         #endregion
 
         #region Contructor
@@ -25,10 +26,11 @@ namespace MyPath
 
 
         #region Public Method
-        public List<Vector3> Find(Vector2 start, Vector2 end)
+        public List<Vector3> Find(Vector2 start, Vector2 end, bool find8direct = true)
         {
             grid.GetXY(start, out int startX, out int startY);
             grid.GetXY(end, out int endX, out int endY);
+            this.find8direct = find8direct;
             List<PathNode> paths = Find(startX, startY, endX, endY);
             if(paths == null)
             {
@@ -104,24 +106,30 @@ namespace MyPath
             {
                 // left
                 neighbourList.Add(GetNode(cNode.x - 1, cNode.y));
-                // left down
-                if(cNode.y -1 >=0)
-                    neighbourList.Add(GetNode(cNode.x - 1, cNode.y-1));
-                // left up
-                if(cNode.y +1 < grid.Height)
-                    neighbourList.Add(GetNode(cNode.x - 1, cNode.y+1));
+                if (find8direct)
+                {
+                    // left down
+                    if (cNode.y - 1 >= 0)
+                        neighbourList.Add(GetNode(cNode.x - 1, cNode.y - 1));
+                    // left up
+                    if (cNode.y + 1 < grid.Height)
+                        neighbourList.Add(GetNode(cNode.x - 1, cNode.y + 1));
+                }                
             }
 
             if(cNode.x +1 < grid.Width)
             {
                 // right
                 neighbourList.Add(GetNode(cNode.x + 1, cNode.y));
-                // right down
-                if (cNode.y - 1 >= 0)
-                    neighbourList.Add(GetNode(cNode.x + 1, cNode.y - 1));
-                // left up
-                if (cNode.y + 1 < grid.Height)
-                    neighbourList.Add(GetNode(cNode.x + 1, cNode.y + 1));
+                if (find8direct)
+                {
+                    // right down
+                    if (cNode.y - 1 >= 0)
+                        neighbourList.Add(GetNode(cNode.x + 1, cNode.y - 1));
+                    // left up
+                    if (cNode.y + 1 < grid.Height)
+                        neighbourList.Add(GetNode(cNode.x + 1, cNode.y + 1));
+                }                
             }
 
             if (cNode.y - 1 >= 0)

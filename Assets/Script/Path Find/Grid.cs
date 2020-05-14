@@ -28,22 +28,12 @@ namespace MyPath
                 {
                     if (isDebug)
                     {
-                        Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
-                        Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
-                    }
-                    else
-                    {
                         DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white);
                         DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white);
                     }
                     
                 }
             if (isDebug)
-            {
-                Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
-                Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
-            }
-            else
             {
                 DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white);
                 DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white);
@@ -128,6 +118,7 @@ namespace MyPath
             lr.SetWidth(0.05f, 0.05f);
             lr.SetPosition(0, start);
             lr.SetPosition(1, end);
+            lr.sortingOrder = 10;
             if (duration != -1)
                 GameObject.Destroy(myLine, duration);
         }
